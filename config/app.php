@@ -195,6 +195,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Custom Service Providers...
+         */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        App\Providers\ResponseMacroServiceProvider::class
+
+
     ],
 
     /*
