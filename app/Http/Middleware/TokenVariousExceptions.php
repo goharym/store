@@ -29,7 +29,7 @@ class TokenVariousExceptions
 
         } catch (TokenExpiredException $e) {
 
-            return Response::clientError(['Token expired'], Status::HTTP_UNAUTHORIZED);
+            return Response::clientError(['Token Expired.'], Status::HTTP_UNAUTHORIZED);
 
         } catch (TokenInvalidException $e) {
 
@@ -37,7 +37,7 @@ class TokenVariousExceptions
 
         } catch (JWTException $e) {
 
-            return Response::clientError(['Token absent'], Status::HTTP_UNAUTHORIZED);
+            return Response::clientError(['Token Absent'], Status::HTTP_UNAUTHORIZED);
 
         }
 
