@@ -13,8 +13,18 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
 
         //Login
         Route::post('login', 'Auth\LoginController@login');
-        Route::post('register', 'Auth\LoginController@register');
 
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Resource Routes
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::apiResources([
+        'user' => 'User\UserController',
+    ]);
 
 });

@@ -45,6 +45,15 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * encrypt password attribute
+     * @param $password
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed

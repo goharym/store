@@ -68,8 +68,6 @@ class Kernel extends HttpKernel
          * Custom routeMiddlewares...
          */
         'auth.jwt' => \App\Http\Middleware\TokenVariousExceptions::class,
-//        'auth.jwt' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
-
 
     ];
 }

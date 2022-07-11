@@ -3,49 +3,14 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Response;
 
 class LoginController extends Controller
 {
-
-    public function register(Request $request)
-    {
-
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required',
-            ]);
-
-        if ($validator->fails()) {
-
-            return response()->json(['error' => $validator->errors()], 401);
-
-        }
-
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-//        if ($this->token) {
-//            return $this->login($request);
-//        }
-
-        return Response::created([
-            'user' => $user->toArray(),
-            'token' => $user->generateToken()
-        ]);
-    }
-
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -53,7 +18,7 @@ class LoginController extends Controller
 
         if (!JWTAuth::attempt($credentials)) {
 
-            return Response::clientError(['Invalid credentials']);
+            return Response::clientError(['Invalid Credentials']);
 
         }
 
