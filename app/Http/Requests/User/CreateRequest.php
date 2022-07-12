@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Http\Constants\UserConstant;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -43,6 +44,7 @@ class CreateRequest extends FormRequest
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'type' => 'required|integer|in:' . UserConstant::TYPES['CONSUMER'] . ',' . UserConstant::TYPES['MERCHANT']
         ];
     }
 }

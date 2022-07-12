@@ -8,12 +8,11 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Symfony\Component\HttpFoundation\Response as Status;
 
 class UserController extends Controller
 {
     /**
-     * Create a new AuthController instance.
+     * Create a new UserController instance.
      *
      * @return void
      */
@@ -56,7 +55,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
 
     /**
      * Update the specified resource in storage.

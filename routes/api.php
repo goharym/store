@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'middleware' => 'lang'], function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -25,6 +25,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
 
     Route::apiResources([
         'user' => 'User\UserController',
+        'category' => 'Category\CategoryController'
     ]);
 
 });
