@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
          * Custom routeMiddlewares...
          */
         'auth.jwt' => \App\Http\Middleware\TokenVariousExceptions::class,
+        'lang' => \App\Http\Middleware\DetectLanguage::class
+
 
     ];
 }
