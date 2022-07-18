@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Cart;
 
-use App\Http\Constants\LanguageConstant;
-use App\Http\Constants\SharedConstant;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class CreateRequest extends FormRequest
@@ -32,7 +32,7 @@ class CreateRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Controller::isAdmin()) return true;
+        if (Controller::isConsumer()) return true;
 
         return false;
     }
@@ -45,9 +45,8 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'nullable|integer|in:' . SharedConstant::STATUSES['NOT AVAILABLE'] . ',' . SharedConstant::STATUSES['AVAILABLE'],
-            'translations' => 'array|required_array_keys:' . LanguageConstant::LOCALES['ENGLISH'] . ',' . LanguageConstant::LOCALES['ARABIC'],
-            'translations.*.name' => 'required|string|min:3|max:255'
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'required|integer|min:1',
         ];
     }
 }

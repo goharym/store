@@ -12,14 +12,18 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('category_translations', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->string('locale');
-            $table->string('name');
-            $table->unique(['category_id', 'locale']);
+            $table->bigInteger('store_id')->unsigned();
+            $table->foreign('store_id')->references('id')->on('stores');
+            $table->boolean('status')->default(0);
+            $table->decimal('price');
+            $table->boolean('vat_type')->default(0);
+            $table->decimal('vat_amount')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('category_translations');
+        Schema::dropIfExists('products');
     }
 };

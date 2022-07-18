@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Api\V1\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateRequest;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\UserResource;
 use App\Models\Category;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -15,11 +13,6 @@ class CategoryController extends Controller
 {
     const PER_PAGE = 15;
 
-    /**
-     * Create a new UserController instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth.jwt');

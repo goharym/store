@@ -12,13 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('category_translations', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->string('locale');
-            $table->string('name');
-            $table->unique(['category_id', 'locale']);
+            $table->bigInteger('merchant_id')->unsigned();
+            $table->foreign('merchant_id')->references('id')->on('users');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('category_translations');
+        Schema::dropIfExists('stores');
     }
 };

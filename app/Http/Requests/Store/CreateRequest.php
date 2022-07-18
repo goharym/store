@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Store;
 
 use App\Http\Constants\LanguageConstant;
-use App\Http\Constants\SharedConstant;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class CreateRequest extends FormRequest
@@ -32,7 +33,7 @@ class CreateRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Controller::isAdmin()) return true;
+        if (Controller::isMerchant()) return true;
 
         return false;
     }
@@ -45,9 +46,34 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'nullable|integer|in:' . SharedConstant::STATUSES['NOT AVAILABLE'] . ',' . SharedConstant::STATUSES['AVAILABLE'],
+            'status' => 'nullable|integer|in:0,1',
             'translations' => 'array|required_array_keys:' . LanguageConstant::LOCALES['ENGLISH'] . ',' . LanguageConstant::LOCALES['ARABIC'],
             'translations.*.name' => 'required|string|min:3|max:255'
         ];
+    }
+
+    /**
+     * Custom various validations.
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator(Validator $validator)
+    {
+        $errors = [];
+        $validator->after(
+            function ($validator) use ($errors) {
+
+                //check if the merchant already has a store.
+                $store = Store::whereMerchantId(Auth::id())->exists();
+
+                if ($store) {
+                    $errors[] = 'Merchant can not has more than one store.';
+                }
+
+                foreach ($errors as $error) {
+                    $validator->errors()->add('', $error);
+                }
+            }
+        );
     }
 }

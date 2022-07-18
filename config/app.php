@@ -199,7 +199,7 @@ return [
          * Custom Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        App\Providers\ResponseMacroServiceProvider::class
+        App\Providers\ResponseMacroServiceProvider::class,
 
 
     ],

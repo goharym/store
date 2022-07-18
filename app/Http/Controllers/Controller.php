@@ -14,10 +14,29 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * check if the authenticated user is an admin.
      * @return bool
      */
     public static function isAdmin(): bool
     {
         return Auth::user()['type'] == UserConstant::TYPES['ADMIN'];
+    }
+
+    /**
+     * check if the authenticated user is a merchant.
+     * @return bool
+     */
+    public static function isMerchant(): bool
+    {
+        return Auth::user()['type'] == UserConstant::TYPES['MERCHANT'];
+    }
+
+    /**
+     * check if the authenticated user is a consumer.
+     * @return bool
+     */
+    public static function isConsumer(): bool
+    {
+        return Auth::user()['type'] == UserConstant::TYPES['CONSUMER'];
     }
 }

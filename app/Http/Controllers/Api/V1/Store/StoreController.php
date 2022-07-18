@@ -1,22 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\User;
+namespace App\Http\Controllers\Api\V1\Store;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\CreateRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Requests\Store\CreateRequest;
+use App\Http\Resources\StoreResource;
+use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
-class UserController extends Controller
+class StoreController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth.jwt')->except('store');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,24 +22,30 @@ class UserController extends Controller
         //
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param CreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
     {
-        $user = User::create($request->validated());
+        $store = Store::create(array_merge($request->validated(),['merchant_id'=>Auth::id()]));
 
-        return Response::created(new UserResource($user));
+        foreach ($request->validated()['translations'] as $key => $trans) {
+
+            $store->translateOrNew($key)->name = $trans['name'];
+        }
+
+        $store->save();
+
+        return Response::created(new StoreResource($store));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,12 +53,22 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -68,7 +79,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -25,7 +25,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'middleware' => 'lang']
 
     Route::apiResources([
         'user' => 'User\UserController',
-        'category' => 'Category\CategoryController'
+        'category' => 'Category\CategoryController',
+        'store' => 'Store\StoreController',
+        'product' => 'Product\ProductController',
+        'cart-item' => 'Cart\CartController'
     ]);
 
 });

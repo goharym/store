@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\User;
+namespace App\Http\Controllers\Api\V1\Product;
 
+use App\Http\Constants\ProductConstant;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\CreateRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Requests\Product\CreateRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-class UserController extends Controller
+class ProductController extends Controller
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
-        $this->middleware('auth.jwt')->except('store');
+        $this->middleware('auth.jwt');
     }
 
     /**
@@ -24,21 +28,30 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return Response::success(ProductResource::collection(Product::latest()->paginate(ProductConstant::PER_PAGE)));
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param CreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
     {
-        $user = User::create($request->validated());
+        $product = Product::create($request->validated());
 
-        return Response::created(new UserResource($user));
+        foreach ($request->validated()['translations'] as $key => $trans) {
+
+            $product->translateOrNew($key)->name = $trans['name'];
+
+            $product->translateOrNew($key)->description = $trans['description'];
+        }
+
+        $product->save();
+
+        return Response::created(new ProductResource($product));
     }
 
     /**
@@ -52,6 +65,16 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.

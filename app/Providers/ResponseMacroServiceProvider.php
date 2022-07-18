@@ -29,18 +29,13 @@ class ResponseMacroServiceProvider extends ServiceProvider
     {
         Response::macro('success', function ($value, $status = Status::HTTP_OK) {
 
-            $response = [
-                'success' => true,
-                'data' => $value
-            ];
+            return $value;
 
-            return Response::make($response, $status);
         });
 
         Response::macro('created', function ($value, $status = Status::HTTP_CREATED) {
 
             $response = [
-                'success' => true,
                 'data' => $value
             ];
 
@@ -49,7 +44,6 @@ class ResponseMacroServiceProvider extends ServiceProvider
 
         Response::macro('clientError', function ($errors, $status = Status::HTTP_UNPROCESSABLE_ENTITY) {
             $response = [
-                'success' => false,
                 'error' => $errors
             ];
 
@@ -58,7 +52,6 @@ class ResponseMacroServiceProvider extends ServiceProvider
 
         Response::macro('serverError', function ($errors, $status = Status::HTTP_INTERNAL_SERVER_ERROR) {
             $response = [
-                'success' => false,
                 'error' => $errors
             ];
 
@@ -67,7 +60,6 @@ class ResponseMacroServiceProvider extends ServiceProvider
 
         Response::macro('forbiddenAccess', function ($errors, $status = Status::HTTP_FORBIDDEN) {
             $response = [
-                'success' => false,
                 'error' => $errors
             ];
 
