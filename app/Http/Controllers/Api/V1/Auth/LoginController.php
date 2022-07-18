@@ -19,7 +19,6 @@ class LoginController extends Controller
         if (!JWTAuth::attempt($credentials)) {
 
             return Response::clientError(['Invalid Credentials']);
-
         }
 
         return Response::success([

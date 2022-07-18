@@ -101,6 +101,7 @@ class CartController extends Controller
     }
 
     /**
+     * Calculate tax value based on product price.
      * @param mixed $item
      * @return float|int
      */

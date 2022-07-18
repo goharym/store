@@ -3,11 +3,9 @@
 namespace App\Http\Requests\Cart;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class CreateRequest extends FormRequest

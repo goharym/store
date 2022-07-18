@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Cart;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class ListRequest extends CreateRequest
 {
     /**

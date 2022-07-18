@@ -2,10 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Constants\UserConstant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryResource extends JsonResource
 {
